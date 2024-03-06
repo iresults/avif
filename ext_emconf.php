@@ -1,17 +1,17 @@
 <?php
 
-$EM_CONF['webp'] = [
-    'title' => 'Creates WebP copies for images',
-    'description' => 'Creates WebP copies of all jpeg and png images',
+$EM_CONF['avif'] = [
+    'title' => 'Creates AVIF copies for images',
+    'description' => 'Creates AVIF copies of all jpeg and png images',
     'category' => 'fe',
-    'author' => 'Wolfgang Klinger',
-    'author_email' => 'wk@plan2.net',
+    'author' => 'Daniel Corn',
+    'author_email' => 'cod@iresults.li',
     'state' => 'stable',
-    'author_company' => 'plan2net GmbH',
-    'version' => '5.0.1',
+    'author_company' => 'iresults GmbH',
+    'version' => '0.1.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-12.9.99',
+            'typo3' => '11.5.0-12.9.99',
         ],
         'conflicts' => [
         ],

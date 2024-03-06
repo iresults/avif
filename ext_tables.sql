@@ -1,5 +1,5 @@
 # This is an internal table, no TCA
-CREATE TABLE tx_webp_failed
+CREATE TABLE tx_avif_failed
 (
     uid                int(11) NOT NULL auto_increment,
     file_id            INT(11) NOT NULL DEFAULT '0',

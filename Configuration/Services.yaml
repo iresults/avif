@@ -1,6 +1,6 @@
 services:
-  Plan2net\Webp\EventListener\AfterFileProcessing:
+  Iresults\Avif\EventListener\AfterFileProcessing:
     tags:
       - name: event.listener
-        identifier: 'webp.after-file-processing'
+        identifier: "avif.after-file-processing"
         event: TYPO3\CMS\Core\Resource\Event\AfterFileProcessingEvent

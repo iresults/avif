@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Plan2net\Webp\Service;
+namespace Iresults\Avif\Service;
 
+use Exception;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -17,8 +18,8 @@ final class Configuration implements SingletonInterface
         if (empty(self::$configuration)) {
             try {
                 self::$configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
-                    ->get('webp');
-            } catch (\Exception $e) {
+                    ->get('avif');
+            } catch (Exception $e) {
                 // Ignore
             }
         }
