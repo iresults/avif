@@ -1,5 +1,5 @@
-# cat=basic; type=string; label=For each mime type conversion parameters (for internal adapter) or command + parameters (in sprintf format for external adapter) (see documentation)
-parameters = image/jpeg::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim %s %s|image/png::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim --minalpha 0 --maxalpha 63 %s %s
+# cat=basic; type=string; label=Command + parameters for each mime type (`{input}` and `{output}` will be replaced with the current file paths) (see documentation)
+parameters =
 # cat=basic; type=boolean; label=Convert all images in local and writable storages (see documentation)
 convert_all = 1
 # cat=basic; type=boolean; label=Suppress output (stdout, stderr) from the external converter command (Linux only)

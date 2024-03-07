@@ -16,7 +16,6 @@ use function filter_var;
 use function is_executable;
 use function is_file;
 use function sprintf;
-use function substr_count;
 
 /**
  * Uses an external binary (e.g. avifenc).
@@ -28,12 +27,8 @@ final class ExternalConverter extends AbstractConverter
      */
     public function __construct(string $parameters)
     {
-        if (2 !== substr_count($parameters, '%s')) {
-            throw new InvalidArgumentException('Command string is invalid, supply 2 string (%s) placeholders!');
-        }
-        $binary = explode(' ', $parameters)[0];
+        $binary = $this->getBinary($parameters);
         if (!is_executable($binary)) {
-            var_dump($parameters);
             throw new InvalidArgumentException(sprintf('Binary "%s" is not executable!', $binary));
         }
 
@@ -44,17 +39,32 @@ final class ExternalConverter extends AbstractConverter
     {
         $silent = filter_var(Configuration::get('silent'), FILTER_VALIDATE_BOOLEAN);
         $silent = false;
-        $command = sprintf(
-            escapeshellcmd($this->parameters),
-            CommandUtility::escapeShellArgument($originalFilePath),
-            CommandUtility::escapeShellArgument($targetFilePath)
-        ) . ($silent ? ' >/dev/null 2>&1' : '');
-        var_dump($command);
+
+        [$_, $arguments] = explode(' ', $this->parameters, 2);
+        $arguments = str_replace('{input}', $originalFilePath, $arguments);
+        $arguments = str_replace('{output}', $targetFilePath, $arguments);
+
+        $binary = $this->getBinary($this->parameters);
+        $command = escapeshellcmd($binary . ' ' . $arguments) . ($silent ? ' >/dev/null 2>&1' : '');
         CommandUtility::exec($command);
         GeneralUtility::fixPermissions($targetFilePath);
 
         if (!@is_file($targetFilePath)) {
             throw new RuntimeException(sprintf('File "%s" was not created!', $targetFilePath));
         }
+    }
+
+    private function getBinary(string $parameters): string
+    {
+        $binary = explode(' ', $parameters, 2)[0];
+        $home = $_SERVER['HOME'] ?? '';
+        if (str_starts_with($binary, '$HOME/')) {
+            return $home . '/' . substr($binary, 6);
+        }
+        if (str_starts_with($binary, '~/')) {
+            return $home . '/' . substr($binary, 2);
+        }
+
+        return $binary;
     }
 }

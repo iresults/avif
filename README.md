@@ -23,7 +23,7 @@ Add via composer:
 
 ## Requirements
 
-`avifenc` must be installed on your system.
+A suitable converter binary must be installed on your system.
 
 ## Extension settings
 
@@ -31,11 +31,26 @@ You can set parameters for the conversion in the extension configuration.
 
 ### `parameters`
 
+> ! This configuration is required. You need to choose the encoder binary and the
+> appropriate configuration.
+
+The placeholders `{input}` and `{output}` will be replaced with the current file paths.
+
+#### `avifenc`
+
 ```
-parameters = image/jpeg::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim %s %s|image/png::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim --minalpha 0 --maxalpha 63 %s %s
+parameters = image/jpeg::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim {input} {output}|image/png::/usr/bin/avifenc --min 0 --max 63 -a end-usage=q -a cq-level=18 -a tune=ssim --minalpha 0 --maxalpha 63 {input} {output}
 ```
 
 You find a list of possible options by running `avifenc` without arguments.
+
+#### `cavif`
+
+```
+parameters = image/jpeg::/usr/bin/cavif --overwrite -o {output} {input}|image/png::/usr/bin/cavif --overwrite -o {output} {input}
+```
+
+You find a list of possible options by running `cavif --help`
 
 ### `convert_all`
 
@@ -69,7 +84,6 @@ you can always remove or change the `$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['
 
 Here you can exclude processing of images from specific directories.
 Example value: `/fileadmin/demo/special;/another-storage/demo/exclusive`
-
 
 ## Webserver example configuration
 

@@ -50,8 +50,6 @@ final class Avif
         $converterClass = ExternalConverter::class;
         $parameters = $this->getParametersForMimeType($originalFile->getMimeType());
 
-        var_dump($parameters);
-
         if (!empty($parameters)) {
             if ($this->hasFailedAttempt((int) $originalFile->getUid(), $parameters)) {
                 throw new WillNotRetryWithConfigurationException(sprintf('Conversion for file "%s" failed before! Will not retry with this configuration!', $originalFilePath));
